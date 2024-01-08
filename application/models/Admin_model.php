@@ -54,8 +54,8 @@ class Admin_model extends CI_Model
         $this->db->select('*');
         $this->db->join('user u', 'bm.user_id = u.id_user');
         $this->db->join('supplier sp', 'bm.supplier_id = sp.id_supplier');
-        $this->db->join('barang b', 'bm.barang_id = b.id_barang');
-        $this->db->join('satuan s', 'b.satuan_id = s.id_satuan');
+        // $this->db->join('barang b', 'bm.barang_id = b.id_barang');
+        // $this->db->join('satuan s', 'b.satuan_id = s.id_satuan');
         if ($limit != null) {
             $this->db->limit($limit);
         }
@@ -73,11 +73,16 @@ class Admin_model extends CI_Model
         return $this->db->get('barang_masuk bm')->result_array();
     }
 
+    public function getDetailMasuk($id_barang_masuk) {
+        $this->db->where('id_barang_masuk', $id_barang_masuk);
+        return $this->db->get('detail_masuk')->result_array();
+    }
+
     public function getBarangKeluar($limit = null, $id_barang = null, $range = null)
     {
         $this->db->select('*');
         $this->db->join('user u', 'bk.user_id = u.id_user');
-        $this->db->join('barang b', 'bk.barang_id = b.id_barang');
+        // $this->db->join('barang b', 'bk.barang_id = b.id_barang');
         $this->db->join('satuan s', 'b.satuan_id = s.id_satuan');
         if ($limit != null) {
             $this->db->limit($limit);
