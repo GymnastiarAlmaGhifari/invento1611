@@ -70,7 +70,7 @@ class DetailKeluar extends CI_Controller
             $barang = $this->admin->getBarangById($detail['id_barang'])[0];
             
             $data['title'] = "Edit Barang Keluar";
-            $data['barang'] = $detail['id_barang'];
+            $data['barang'] = $barang['nama_barang'];
             $data['stock'] = $barang['stok'] +$detail['jumlah'];
             $data['id_detail_keluar'] = $id_keluar;
             $this->template->load('templates/dashboard', 'detail_keluar/edit', $data);
