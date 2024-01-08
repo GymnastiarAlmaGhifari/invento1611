@@ -27,9 +27,6 @@
                     <th>ID Transaksi</th>
                     <th>Tgl Masuk</th>
                     <th>Supplier</th>
-                    <th>Nama Barang</th>
-                    <th>Jenis</th>
-                    <th>Jumlah</th>
 					<th>Berkas</th>
                     <th>Aksi</th>
                 </tr>
@@ -45,9 +42,6 @@
                             <td><?= $bm['id_barang_masuk']; ?></td>
                             <td><?= $bm['tanggal_masuk']; ?></td>
                             <td><?= $bm['nama_supplier']; ?></td>
-                            <td><?= $bm['nama_barang']; ?></td>
-                            <td><?= $bm['jeniss_id']; ?></td>
-                            <td><?= $bm['jumlah_masuk'] . ' ' . $bm['nama_satuan']; ?></td>
 							<td><?= $bm['berkas']; ?></td>
 
                             <td>

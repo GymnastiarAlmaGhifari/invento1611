@@ -24,13 +24,12 @@ class Barangmasuk extends CI_Controller
     {
         $this->form_validation->set_rules('tanggal_masuk', 'Tanggal Masuk', 'required|trim');
         $this->form_validation->set_rules('supplier_id', 'Supplier', 'required');
-        $this->form_validation->set_rules('barang_id', 'Barang', 'required');
-        $this->form_validation->set_rules('jumlah_masuk', 'Jumlah Masuk', 'required|trim|numeric|greater_than[0]');
     }
 
     public function add()
     {
         $this->_validasi();
+        var_dump($this->form_validation->run());
         if ($this->form_validation->run() == false) {
             $data['title'] = "Barang Masuk";
             $data['supplier'] = $this->admin->get('supplier');
@@ -40,7 +39,11 @@ class Barangmasuk extends CI_Controller
             /// Mendapatkan dan men-generate kode transaksi barang masuk
             $kode = 'T-BM-' . date('ymd');
             $kode_terakhir = $this->admin->getMax('barang_masuk', 'id_barang_masuk', $kode);
-            $kode_tambah = substr($kode_terakhir, -5, 5);
+            if ($kode_terakhir) {
+                $kode_tambah = substr($kode_terakhir, -5, 5);
+            }else {
+                $kode_tambah = 0;
+            }
             $kode_tambah++;
             $number = str_pad($kode_tambah, 5, '0', STR_PAD_LEFT);
             $data['id_barang_masuk'] = $kode . $number;
@@ -51,11 +54,16 @@ class Barangmasuk extends CI_Controller
             if($_FILES['berkas']['name'] != ""){
                 $input['berkas'] = $this->upload_berkas('berkas')['file_name'];
             }
-            $insert = $this->admin->insert('barang_masuk', $input);
+            var_dump($_POST);
+            // $data = [
+            //     "id_barang_masuk "=><input type="text">
+            // ]
+            $insert = $this->admin->insert('barang_masuk', $_POST);
+            var_dump($insert);
 
             if ($insert) {
                 set_pesan('data berhasil disimpan.');
-                redirect('barangmasuk');
+                redirect('detailmasuk/index/'.$_POST["id_barang_masuk"]);
             } else {
                 set_pesan('Opps ada kesalahan!');
                 redirect('barangmasuk/add');
