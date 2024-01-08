@@ -1,19 +1,30 @@
+<h2>id transaksi : <?= $id_keluar ?></h2>
 <?= $this->session->flashdata('pesan'); ?>
 <div class="card shadow-sm border-bottom-primary">
     <div class="card-header bg-white py-3">
         <div class="row">
             <div class="col">
                 <h4 class="h5 align-middle m-0 font-weight-bold text-primary">
-                    Riwayat Data Barang Masuk
+                    List Barang
                 </h4>
             </div>
             <div class="col-auto">
-                <a href="<?= base_url('barangmasuk/add') ?>" class="btn btn-sm btn-primary btn-icon-split">
+                <a href="<?= base_url('barangkeluar') ?>" class="btn btn-sm btn-secondary btn-icon-split">
+                    <span class="icon">
+                        <i class="fa fa-arrow-left"></i>
+                    </span>
+                    <span class="text">
+                        Kembali
+                    </span>
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="<?= base_url('detailkeluar/add/').$id_keluar ?>" class="btn btn-sm btn-primary btn-icon-split">
                     <span class="icon">
                         <i class="fa fa-plus"></i>
                     </span>
                     <span class="text">
-                        Input Barang Masuk
+                        Tambah Barang
                     </span>
                 </a>
             </div>
@@ -23,45 +34,30 @@
         <table class="table table-striped w-100 dt-responsive nowrap" id="dataTable">
             <thead>
                 <tr>
-                    <th>No. </th>
-                    <th>ID Transaksi</th>
-                    <th>Tgl Masuk</th>
-                    <th>Supplier</th>
-                    <th>Detail Barang</th>
-					<th>Berkas</th>
-                    <th>Aksi</th>
+                    <th>no</th>
+                    <th>id_barang</th>
+                    <th>nama barang</th>
+                    <th>jumlah</th>]
+                    <th>aksi</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $no = 1;
-                if ($barangmasuk) :
-                    foreach ($barangmasuk as $bm) :
-                        ?>
-                        <tr>
-                            <td><?= $no++; ?></td>
-                            <td><?= $bm['id_barang_masuk']; ?></td>
-                            <td><?= $bm['tanggal_masuk']; ?></td>
-                            <td><?= $bm['nama_supplier']; ?></td>
-                            <td>
-                            <a href="<?= base_url('detailmasuk/index/') . $bm['id_barang_masuk'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-boxes"></i></a></td>
-							<td><?= $bm['berkas']; ?></td>
-
-                            <td>
-                            <a href="<?= base_url('barangmasuk/edit/') . $bm['id_barang_masuk'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
-							<a onclick="confirmDelete('<?= base_url('barangmasuk/delete/') . $bm['id_barang_masuk'] ?>')" class="btn btn-danger btn-circle btn-sm">
-<i class="fa fa-trash"></i>
-</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else : ?>
+                foreach ($barangs as $row) : ?>
                     <tr>
-                        <td colspan="8" class="text-center">
-                            Data Kosong
+                        <td><?= $no++; ?></td>
+                        <td><?php echo $row['id_barang']; ?></td>
+                        <td><?php echo $row['nama_barang']; ?></td>
+                        <td><?php echo $row['jumlah']; ?></td>
+                        <td>
+                            <a href="<?= base_url('detailkeluar/edit/') . $row['id_detail_keluar'] . '/' . $row['id_barang_keluar'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
+                            <a onclick="confirmDelete('<?= base_url('detailkeluar/delete/') . $row['id_detail_keluar'] . '/' . $row['id_barang_keluar'] ?>')" class="btn btn-danger btn-circle btn-sm">
+                                <i class="fa fa-trash"></i>
+                            </a>
                         </td>
                     </tr>
-                <?php endif; ?>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
@@ -77,7 +73,7 @@
     function confirmDelete(url) {
         Swal.fire({
             title: 'Konfirmasi Hapus',
-            text: "Apakah Anda yakin ingin menghapus barang masuk ini?",
+            text: "Apakah Anda yakin ingin menghapus barang keluar ini?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',

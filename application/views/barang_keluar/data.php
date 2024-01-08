@@ -26,9 +26,7 @@
                     <th>No. </th>
                     <th>ID Transaksi</th>
                     <th>Tanggal</th>
-                    <th>Nama Barang</th>
-                    <th>Jenis</th>
-                    <th>Jumlah</th>
+                    <th>Detail Barang</th>
                     <th>Keterangan</th>
                     <th>Aksi</th>
                 </tr>
@@ -38,20 +36,21 @@
                 $no = 1;
                 if ($barangkeluar) :
                     foreach ($barangkeluar as $bk) :
-                        ?>
+                ?>
                         <tr>
                             <td><?= $no++; ?></td>
                             <td><?= $bk['id_barang_keluar']; ?></td>
                             <td><?= $bk['tanggal_keluar']; ?></td>
-                            <td><?= $bk['nama_barang']; ?></td>
-                            <td><?= $bk['jeniss_id']; ?></td>
-                            <td><?= $bk['jumlah_keluar'] . ' ' . $bk['nama_satuan']; ?></td>
+                            <td>
+                                <a href="<?= base_url('detailkeluar/index/') . $bk['id_barang_keluar'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-boxes"></i></a>
+                            </td>
                             <td><?= $bk['keterangan']; ?></td>
                             <td>
-                                 <a href="<?= base_url('barangkeluar/edit/') . $bk['id_barang_keluar'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
-								 <a onclick="confirmDelete('<?= base_url('barangkeluar/delete/') . $bk['id_barang_keluar'] ?>')" class="btn btn-danger btn-circle btn-sm">
-    <i class="fa fa-trash"></i>
-</a>                            </td>
+                                <a href="<?= base_url('barangkeluar/edit/') . $bk['id_barang_keluar'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
+                                <a onclick="confirmDelete('<?= base_url('barangkeluar/delete/') . $bk['id_barang_keluar'] ?>')" class="btn btn-danger btn-circle btn-sm">
+                                    <i class="fa fa-trash"></i>
+                                </a>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else : ?>
