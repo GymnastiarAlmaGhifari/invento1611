@@ -9,7 +9,17 @@
                 </h4>
             </div>
             <div class="col-auto">
-                <a href="<?= base_url('barangkeluar/add') ?>" class="btn btn-sm btn-primary btn-icon-split">
+                <a href="<?= base_url('barangkeluar') ?>" class="btn btn-sm btn-secondary btn-icon-split">
+                    <span class="icon">
+                        <i class="fa fa-arrow-left"></i>
+                    </span>
+                    <span class="text">
+                        Kembali
+                    </span>
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="<?= base_url('detailkeluar/add/').$id_keluar ?>" class="btn btn-sm btn-primary btn-icon-split">
                     <span class="icon">
                         <i class="fa fa-plus"></i>
                     </span>
@@ -27,7 +37,8 @@
                     <th>no</th>
                     <th>id_barang</th>
                     <th>nama barang</th>
-                    <th>jumlah</th>
+                    <th>jumlah</th>]
+                    <th>aksi</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,8 +48,14 @@
                     <tr>
                         <td><?= $no++; ?></td>
                         <td><?php echo $row['id_barang']; ?></td>
-                        <td><?php echo $row['id_barang_keluar']; ?></td>
+                        <td><?php echo $row['nama_barang']; ?></td>
                         <td><?php echo $row['jumlah']; ?></td>
+                        <td>
+                            <a href="<?= base_url('detailkeluar/edit/') . $row['id_detail_keluar'] . '/' . $row['id_barang_keluar'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
+                            <a onclick="confirmDelete('<?= base_url('detailkeluar/delete/') . $row['id_detail_keluar'] . '/' . $row['id_barang_keluar'] ?>')" class="btn btn-danger btn-circle btn-sm">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

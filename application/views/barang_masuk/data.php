@@ -27,6 +27,7 @@
                     <th>ID Transaksi</th>
                     <th>Tgl Masuk</th>
                     <th>Supplier</th>
+                    <th>Detail Barang</th>
 					<th>Berkas</th>
                     <th>Aksi</th>
                 </tr>
@@ -42,6 +43,8 @@
                             <td><?= $bm['id_barang_masuk']; ?></td>
                             <td><?= $bm['tanggal_masuk']; ?></td>
                             <td><?= $bm['nama_supplier']; ?></td>
+                            <td>
+                            <a href="<?= base_url('detailmasuk/index/') . $bm['id_barang_masuk'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-boxes"></i></a></td>
 							<td><?= $bm['berkas']; ?></td>
 
                             <td>

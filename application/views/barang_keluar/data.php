@@ -26,7 +26,7 @@
                     <th>No. </th>
                     <th>ID Transaksi</th>
                     <th>Tanggal</th>
-                    <!-- <th>Jenis</th> -->
+                    <th>Detail Barang</th>
                     <th>Keterangan</th>
                     <th>Aksi</th>
                 </tr>
@@ -41,6 +41,9 @@
                             <td><?= $no++; ?></td>
                             <td><?= $bk['id_barang_keluar']; ?></td>
                             <td><?= $bk['tanggal_keluar']; ?></td>
+                            <td>
+                                <a href="<?= base_url('detailkeluar/index/') . $bk['id_barang_keluar'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-boxes"></i></a>
+                            </td>
                             <td><?= $bk['keterangan']; ?></td>
                             <td>
                                 <a href="<?= base_url('barangkeluar/edit/') . $bk['id_barang_keluar'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
