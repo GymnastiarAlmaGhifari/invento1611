@@ -388,9 +388,9 @@
         let satuan = $('#satuan');
         let stok = $('#stok');
         let total = $('#total_stok');
-        let jumlah = hal == 'barangmasuk' ? $('#jumlah_masuk') : $('#jumlah_keluar');
+        let jumlah = hal == 'barangmasuk' ? $('#jumlah') : $('#jumlah_keluar');
 
-        $(document).on('change', '#barang_id', function() {
+        $(document).on('change', '#id_barang', function() {
             let url = '<?= base_url('barang/getstok/'); ?>' + this.value;
             $.getJSON(url, function(data) {
                 satuan.html(data.nama_satuan);
@@ -400,7 +400,7 @@
             });
         });
 
-        $(document).on('keyup', '#jumlah_masuk', function() {
+        $(document).on('keyup', '#jumlah', function() {
             let totalStok = parseInt(stok.val()) + parseInt(this.value);
             total.val(Number(totalStok));
         });

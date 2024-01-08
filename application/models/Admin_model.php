@@ -74,8 +74,12 @@ class Admin_model extends CI_Model
 
     public function getDetailMasuk($id_barang_masuk)
     {
+        $this->db->select('*');
+        $this->db->from('detail_masuk');
+        $this->db->join('barang', 'detail_masuk.id_barang = barang.id_barang');
         $this->db->where('id_barang_masuk', $id_barang_masuk);
-        return $this->db->get('detail_masuk')->result_array();
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
     public function getBarangKeluar($limit = null, $id_barang = null, $range = null)

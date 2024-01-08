@@ -9,12 +9,22 @@
                 </h4>
             </div>
             <div class="col-auto">
-                <a href="<?= base_url('barangmasuk/add') ?>" class="btn btn-sm btn-primary btn-icon-split">
+                <a href="<?= base_url('detailmasuk/add/' . $id_masuk) ?>" class="btn btn-sm btn-primary btn-icon-split">
                     <span class="icon">
                         <i class="fa fa-plus"></i>
                     </span>
                     <span class="text">
                         Tambah Barang
+                    </span>
+                </a>
+            </div>
+            <div class="col-auto">
+                <a href="<?= base_url('barangmasuk') ?>" class="btn btn-sm btn-secondary btn-icon-split">
+                    <span class="icon">
+                        <i class="fa fa-arrow-left"></i>
+                    </span>
+                    <span class="text">
+                        Kembali
                     </span>
                 </a>
             </div>
@@ -28,17 +38,24 @@
                     <th>id_barang</th>
                     <th>nama barang</th>
                     <th>jumlah</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                <?php 
+                <?php
                 $no = 1;
                 foreach ($barangs as $row) : ?>
                     <tr>
                         <td><?= $no++; ?></td>
                         <td><?php echo $row['id_barang']; ?></td>
-                        <td><?php echo $row['id_barang_masuk']; ?></td>
+                        <td><?php echo $row['nama_barang']; ?></td>
                         <td><?php echo $row['jumlah']; ?></td>
+                        <td>
+                            <a href="<?= base_url('detailmasuk/edit/') . $row['id_detail_masuk'] . '/' . $row['id_barang_masuk'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
+                            <a onclick="confirmDelete('<?= base_url('detailmasuk/delete/') . $row['id_detail_masuk'] . '/' . $row['id_barang_masuk'] ?>')" class="btn btn-danger btn-circle btn-sm">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>
