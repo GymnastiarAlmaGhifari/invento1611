@@ -9,7 +9,7 @@
                         </h4>
                     </div>
                     <div class="col-auto">
-                        <a href="<?= base_url('detailmasuk/index/' . $id_detail_keluar) ?>" class="btn btn-sm btn-secondary btn-icon-split">
+                        <a href="<?= base_url('detailkeluar/index/' . $id_detail_keluar) ?>" class="btn btn-sm btn-secondary btn-icon-split">
                             <span class="icon">
                                 <i class="fa fa-arrow-left"></i>
                             </span>
@@ -66,7 +66,7 @@
                 <div class="row form-group">
                     <div class="col offset-md-4">
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <!-- <button type="reset" class="btn btn-secondary">Reset</button> -->
                     </div>
                 </div>
                 <?= form_close(); ?>
