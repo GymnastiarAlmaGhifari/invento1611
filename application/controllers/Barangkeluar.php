@@ -12,7 +12,7 @@ class Barangkeluar extends CI_Controller
         $this->load->library('form_validation');
     }
 
-    public function index() 
+    public function index()
     {
         $data['title'] = "Barang keluar";
         $data['barangkeluar'] = $this->admin->getBarangkeluar();
@@ -23,24 +23,24 @@ class Barangkeluar extends CI_Controller
     private function _validasi()
     {
         $this->form_validation->set_rules('tanggal_keluar', 'Tanggal Keluar', 'required|trim');
-        $this->form_validation->set_rules('barang_id', 'Barang', 'required');
+        // $this->form_validation->set_rules('barang_id', 'Barang', 'required');
         //$this->form_validation->set_rules('jeniss_id', 'Jenis Barang', 'required');
         $this->form_validation->set_rules('keterangan', 'Keterangan', 'required');
 
-        $input = $this->input->post('barang_id', true);
-        if ($this->admin) {
-            $stok = $this->admin->get('barang', ['id_barang' => $input])['stok'];
-        }
-        $stok_valid = $stok + 1;
+        // $input = $this->input->post('barang_id', true);
+        // if ($this->admin) {
+        //     $stok = $this->admin->get('barang', ['id_barang' => $input])['stok'];
+        // }
+        // $stok_valid = $stok + 1;
 
-        $this->form_validation->set_rules(
-            'jumlah_keluar',
-            'Jumlah Keluar',
-            "required|trim|numeric|greater_than[0]|less_than[{$stok_valid}]",
-            [
-                'less_than' => "Jumlah Keluar tidak boleh lebih dari {$stok}"
-            ]
-        );
+        // $this->form_validation->set_rules(
+        //     'jumlah_keluar',
+        //     'Jumlah Keluar',
+        //     "required|trim|numeric|greater_than[0]|less_than[{$stok_valid}]",
+        //     [
+        //         'less_than' => "Jumlah Keluar tidak boleh lebih dari {$stok}"
+        //     ]
+        // );
     }
 
     public function add()
@@ -64,28 +64,29 @@ class Barangkeluar extends CI_Controller
             $input = $this->input->post(null, true);
             $insert = $this->admin->insert('barang_keluar', $input);
 
+
             if ($insert) {
                 set_pesan('data berhasil disimpan.');
-                redirect('barangkeluar');
+                redirect('detailkeluar/index/' . $input["id_barang_keluar"]);
             } else {
                 set_pesan('Opps ada kesalahan!');
                 redirect('barangkeluar/add');
             }
         }
     }
-      public function edit($getId)
+    public function edit($getId)
     {
         $id = encode_php_tags($getId);
         $this->_validasi();
 
         if ($this->form_validation->run() == false) {
             $data['title'] = "Barang Keluar";
-           $data['barang'] = $this->admin->get('barang');
-           // $data['tanggal_keluar'] = $this->admin->get('tanggal_keluar');
-           // $data['jenis'] = $this->admin->get('jenis');
-           // $data['keterangan'] = $this->admin->get('keterangan');
+            $data['barang'] = $this->admin->get('barang');
+            // $data['tanggal_keluar'] = $this->admin->get('tanggal_keluar');
+            // $data['jenis'] = $this->admin->get('jenis');
+            // $data['keterangan'] = $this->admin->get('keterangan');
             $data['barangkeluar'] = $this->admin->get('barang_keluar', ['id_barang_keluar' => $id]);
-            $data['stok'] = $this->admin->cekStok($data['barangkeluar']['barang_id']);
+            // $data['stok'] = $this->admin->cekStok($data['barangkeluar']['barang_id']);
             $this->template->load('templates/dashboard', 'barang_keluar/edit', $data);
         } else {
             $input = $this->input->post(null, true);
