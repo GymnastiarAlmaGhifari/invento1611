@@ -409,6 +409,11 @@
             let totalStok = parseInt(stok.val()) - parseInt(this.value);
             total.val(Number(totalStok));
         });
+
+        $(document).on('keyup', '#jumlah_edit', function() {
+            let totalStok = parseInt(this.value);
+            total.val(Number(totalStok));
+        });
     </script>
 
     <?php if ($this->uri->segment(1) == 'dashboard') : ?>

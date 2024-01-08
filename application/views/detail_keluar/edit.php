@@ -9,7 +9,7 @@
                         </h4>
                     </div>
                     <div class="col-auto">
-                        <a href="<?= base_url('detailmasuk/index/' . $id_detail_masuk) ?>" class="btn btn-sm btn-secondary btn-icon-split">
+                        <a href="<?= base_url('detailmasuk/index/' . $id_detail_keluar) ?>" class="btn btn-sm btn-secondary btn-icon-split">
                             <span class="icon">
                                 <i class="fa fa-arrow-left"></i>
                             </span>
@@ -22,14 +22,16 @@
             </div>
             <div class="card-body">
                 <?= $this->session->flashdata('pesan'); ?>
-                <?= form_open('', [], ['id_barang_masuk' => $id_detail_masuk,]); ?>
+                <?= form_open('', [], ['id_barang_keluar' => $id_detail_keluar,]); ?>
                 <div class="card">
                     <div class="card-body">
                         <div class="row form-group">
-                            <label class="col-md-4 text-md-right" for="id_barang">Id Barang</label>
+                            <label class="col-md-4 text-md-right" for="id_barang">Barang</label>
                             <div class="col-md-5">
                                 <div class="input-group">
-                                    <input readonly="readonly"  name="id_barang" id="id_barang" value="<?= $barang?>"class="form-control">
+                                    <div class="input-group">
+                                        <input readonly="readonly" name="id_barang" id="id_barang" value="<?= $barang ?>" class="form-control">
+                                    </div>
                                 </div>
                                 <?= form_error('id_barang', '<small class="text-danger">', '</small>'); ?>
                             </div>
@@ -38,14 +40,14 @@
                         <div class="row form-group">
                             <label class="col-md-4 text-md-right" for="stok">Stok</label>
                             <div class="col-md-5">
-                                <input readonly="readonly" value="<?= $stock?>" id="stok" type="number" class="form-control">
+                                <input readonly="readonly" id="stok" value="<?= $stock ?>" type="number" class="form-control">
                             </div>
                         </div>
                         <div class="row form-group">
-                            <label class="col-md-4 text-md-right" for="jumlah">Jumlah Masuk</label>
+                            <label class="col-md-4 text-md-right" for="jumlah_keluar">Jumlah Masuk</label>
                             <div class="col-md-5">
                                 <div class="input-group">
-                                    <input value="<?= set_value('jumlah'); ?>" name="jumlah" id="jumlah" type="number" class="form-control" placeholder="Jumlah Masuk...">
+                                    <input value="<?= set_value('jumlah'); ?>" name="jumlah" id="jumlah_keluar" type="number" class="form-control" placeholder="Jumlah Masuk...">
                                     <div class="input-group-append">
                                         <span class="input-group-text" id="satuan">Satuan</span>
                                     </div>
@@ -56,7 +58,7 @@
                         <div class="row form-group">
                             <label class="col-md-4 text-md-right" for="total_stok">Total Stok</label>
                             <div class="col-md-5">
-                                <input readonly="readonly" value="<?= $stock?>" id="total_stok" type="number" class="form-control">
+                                <input readonly="readonly" id="total_stok" type="number" class="form-control">
                             </div>
                         </div>
                     </div>

@@ -104,8 +104,12 @@ class Admin_model extends CI_Model
 
     public function getDetailKeluar($id_barang_keluar)
     {
-        $this->db->where('id_barang_keluar', $id_barang_keluar);
-        return $this->db->get('detail_keluar')->result_array();
+        $this->db->select('*');
+        $this->db->from('detail_keluar');
+        $this->db->join('barang', 'detail_keluar.id_barang = barang.id_barang');
+        $this->db->where('detail_keluar.id_barang_keluar', $id_barang_keluar);
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
     public function getMax($table, $field, $kode = null)
@@ -167,5 +171,40 @@ class Admin_model extends CI_Model
         $this->db->select('id_barang, nama_barang, stok');
         $query = $this->db->get('barang');
         return $query->result();
+    }
+
+    public function updateStok($id_barang, $jumlah) {
+        $this->db->set('stok', $jumlah);
+        $this->db->where('id_barang', $id_barang);
+        $this->db->update('barang');
+    }    
+
+    public function getDetailMasukById($id_detail_masuk) {
+        $this->db->where('id_detail_masuk', $id_detail_masuk);
+        $query = $this->db->get('detail_masuk');
+        return $query->result_array();
+    }
+    public function getDetailKeluarById($id_detail_keluar) {
+        $this->db->where('id_detail_keluar', $id_detail_keluar);
+        $query = $this->db->get('detail_keluar');
+        return $query->result_array();
+    }
+
+    public function getBarangById($id_barang) {
+        $this->db->where('id_barang', $id_barang);
+        $query = $this->db->get('barang');
+        return $query->result_array();
+    }
+
+    public function tambahStok($id_barang, $jumlah) {
+        $this->db->set('stok', 'stok + '.$jumlah, FALSE);
+        $this->db->where('id_barang', $id_barang);
+        $this->db->update('barang');
+    }
+    
+    public function kurangiStok($id_barang, $jumlah) {
+        $this->db->set('stok', 'stok - '.$jumlah, FALSE);
+        $this->db->where('id_barang', $id_barang);
+        $this->db->update('barang');
     }
 }

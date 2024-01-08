@@ -31,11 +31,10 @@ class DetailMasuk extends CI_Controller
         $this->template->load('templates/dashboard', 'detail_masuk/data', $data);
     }
 
-    public function add($id_masuk) {
+    public function add($id_masuk)
+    {
         $this->_validasi();
-        var_dump($_POST);
 
-        var_dump($this->form_validation->run());
         if ($this->form_validation->run() == false) {
             $data['title'] = "Barang Masuk";
             $data['barang'] = $this->admin->get('barang');
@@ -43,13 +42,13 @@ class DetailMasuk extends CI_Controller
             $this->template->load('templates/dashboard', 'detail_masuk/add', $data);
         } else {
             $input = $this->input->post(null, true);
-            var_dump($_POST);
+            $this->db->trans_start();
             $insert = $this->admin->insert('detail_masuk', $_POST);
-            var_dump($insert);
-
+            $this->admin->tambahStok($input['id_barang'], $input['jumlah']);
+            $this->db->trans_complete();
             if ($insert) {
                 set_pesan('data berhasil disimpan.');
-                redirect('detailmasuk/index/'.$_POST["id_barang_masuk"]);
+                redirect('detailmasuk/index/' . $_POST["id_barang_masuk"]);
             } else {
                 set_pesan('Opps ada kesalahan!');
                 redirect('barangmasuk/add');
@@ -57,23 +56,33 @@ class DetailMasuk extends CI_Controller
         }
     }
 
-    public function edit($id_detail_masuk,$id_masuk) {
+    public function edit($id_detail_masuk, $id_masuk)
+    {
         $this->_validasi();
 
-        var_dump($this->form_validation->run());
         if ($this->form_validation->run() == false) {
+            $detail = $this->admin->getDetailMasukById($id_detail_masuk)[0];
+            $barang = $this->admin->getBarangById($detail['id_barang'])[0];
+            
             $data['title'] = "Barang Masuk";
-            $data['barang'] = $this->admin->get('barang');
+            $data['barang'] = $detail['id_barang'];
+            $data['stock'] = $barang['stok'] - $detail['jumlah'];
             $data['id_detail_masuk'] = $id_masuk;
-            $this->template->load('templates/dashboard', 'detail_masuk/add', $data);
+            $this->template->load('templates/dashboard', 'detail_masuk/edit', $data);
         } else {
             $input = $this->input->post(null, true);
-            var_dump($_POST);
-            $insert = $this->admin->update('detail_masuk','id_detail_masuk',$id_detail_masuk, $_POST);
+            $this->db->trans_start();
+            $detail = $this->admin->getDetailMasukById($id_detail_masuk)[0];
+            $barang = $this->admin->getBarangById($detail['id_barang'])[0];
+            $stok = $barang['stok'] - $detail['jumlah'];
+            $insert = $this->admin->update('detail_masuk', 'id_detail_masuk', $id_detail_masuk, $_POST);
+            $total = $stok + $input['jumlah'];
+            $this->admin->updateStok($input['id_barang'], $total);
+            $this->db->trans_complete();
 
             if ($insert) {
                 set_pesan('data berhasil disimpan.');
-                redirect('detailmasuk/index/'.$_POST["id_barang_masuk"]);
+                redirect('detailmasuk/index/' . $_POST["id_barang_masuk"]);
             } else {
                 set_pesan('Opps ada kesalahan!');
                 redirect('detailmasuk/add');
@@ -81,13 +90,18 @@ class DetailMasuk extends CI_Controller
         }
     }
 
-    public function delete($id_detail_masuk,$id_masuk)
+    public function delete($id_detail_masuk, $id_masuk)
     {
-        if ($this->admin->delete('detail_masuk', 'id_detail_masuk', $id_detail_masuk)) {
+        $this->db->trans_start();
+        $detail = $this->admin->getDetailMasukById($id_detail_masuk)[0];
+        $this->admin->kurangiStok($detail['id_barang'], $detail['jumlah']);
+        $delete = $this->admin->delete('detail_masuk', 'id_detail_masuk', $id_detail_masuk);
+        $this->db->trans_complete();
+        if ($delete) {
             set_pesan('data berhasil dihapus.');
         } else {
             set_pesan('data gagal dihapus.', false);
         }
-        redirect('/detailmasuk/index/'.$id_masuk);
+        redirect('/detailmasuk/index/' . $id_masuk);
     }
 }
