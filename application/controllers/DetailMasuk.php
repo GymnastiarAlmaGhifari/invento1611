@@ -65,7 +65,7 @@ class DetailMasuk extends CI_Controller
             $barang = $this->admin->getBarangById($detail['id_barang'])[0];
             
             $data['title'] = "Barang Masuk";
-            $data['barang'] = $detail['id_barang'];
+            $data['barang'] = $barang['nama_barang'];
             $data['stock'] = $barang['stok'] - $detail['jumlah'];
             $data['id_detail_masuk'] = $id_masuk;
             $this->template->load('templates/dashboard', 'detail_masuk/edit', $data);

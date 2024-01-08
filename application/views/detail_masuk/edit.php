@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row form-group">
-                            <label class="col-md-4 text-md-right" for="id_barang">Id Barang</label>
+                            <label class="col-md-4 text-md-right" for="id_barang">Barang</label>
                             <div class="col-md-5">
                                 <div class="input-group">
                                     <input readonly="readonly"  name="id_barang" id="id_barang" value="<?= $barang?>"class="form-control">
@@ -64,7 +64,7 @@
                 <div class="row form-group">
                     <div class="col offset-md-4">
                         <button type="submit" class="btn btn-primary">Simpan</button>
-                        <button type="reset" class="btn btn-secondary">Reset</button>
+                        <!-- <button type="reset" class="btn btn-secondary">Reset</button> -->
                     </div>
                 </div>
                 <?= form_close(); ?>

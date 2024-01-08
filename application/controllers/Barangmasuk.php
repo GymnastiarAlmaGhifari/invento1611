@@ -78,11 +78,7 @@ class Barangmasuk extends CI_Controller
         if ($this->form_validation->run() == false) {
             $data['title'] = "Barang Masuk";
             $data['barang'] = $this->admin->get('barang');
-            // $data['tanggal_keluar'] = $this->admin->get('tanggal_keluar');
-            //$data['jenis'] = $this->admin->get('jenis');
-            // $data['keterangan'] = $this->admin->get('keterangan');
             $data['barangmasuk'] = $this->admin->get('barang_masuk', ['id_barang_masuk' => $id]);
-            $data['stok'] = $this->admin->cekStok($data['barangmasuk']['barang_id']);
             $data['supplier'] = $this->admin->get('supplier');
             $this->template->load('templates/dashboard', 'barang_masuk/edit', $data);
        } else {
