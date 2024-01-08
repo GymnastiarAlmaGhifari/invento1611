@@ -46,7 +46,6 @@ class Admin_model extends CI_Model
         $this->db->join('satuan s', 'b.satuan_id = s.id_satuan');
         $this->db->order_by('id_barang');
         return $this->db->get('barang b')->result_array();
-        
     }
 
     public function getBarangMasuk($limit = null, $id_barang = null, $range = null)
@@ -73,7 +72,8 @@ class Admin_model extends CI_Model
         return $this->db->get('barang_masuk bm')->result_array();
     }
 
-    public function getDetailMasuk($id_barang_masuk) {
+    public function getDetailMasuk($id_barang_masuk)
+    {
         $this->db->where('id_barang_masuk', $id_barang_masuk);
         return $this->db->get('detail_masuk')->result_array();
     }
@@ -83,7 +83,7 @@ class Admin_model extends CI_Model
         $this->db->select('*');
         $this->db->join('user u', 'bk.user_id = u.id_user');
         // $this->db->join('barang b', 'bk.barang_id = b.id_barang');
-        $this->db->join('satuan s', 'b.satuan_id = s.id_satuan');
+        // $this->db->join('satuan s', 'b.satuan_id = s.id_satuan');
         if ($limit != null) {
             $this->db->limit($limit);
         }
@@ -96,6 +96,12 @@ class Admin_model extends CI_Model
         }
         $this->db->order_by('id_barang_keluar', 'DESC');
         return $this->db->get('barang_keluar bk')->result_array();
+    }
+
+    public function getDetailKeluar($id_barang_keluar)
+    {
+        $this->db->where('id_barang_keluar', $id_barang_keluar);
+        return $this->db->get('detail_keluar')->result_array();
     }
 
     public function getMax($table, $field, $kode = null)
@@ -153,9 +159,9 @@ class Admin_model extends CI_Model
         return $this->db->get_where('barang b', ['id_barang' => $id])->row_array();
     }
     public function getBarangStok()
-{
-    $this->db->select('id_barang, nama_barang, stok');
-    $query = $this->db->get('barang');
-    return $query->result();
-}
+    {
+        $this->db->select('id_barang, nama_barang, stok');
+        $query = $this->db->get('barang');
+        return $query->result();
+    }
 }

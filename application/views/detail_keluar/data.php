@@ -1,10 +1,11 @@
+<h2>id transaksi : <?= $id_keluar ?></h2>
 <?= $this->session->flashdata('pesan'); ?>
 <div class="card shadow-sm border-bottom-primary">
     <div class="card-header bg-white py-3">
         <div class="row">
             <div class="col">
                 <h4 class="h5 align-middle m-0 font-weight-bold text-primary">
-                    Riwayat Data Barang Keluar
+                    List Barang
                 </h4>
             </div>
             <div class="col-auto">
@@ -13,7 +14,7 @@
                         <i class="fa fa-plus"></i>
                     </span>
                     <span class="text">
-                        Input Barang Keluar
+                        Tambah Barang
                     </span>
                 </a>
             </div>
@@ -23,47 +24,30 @@
         <table class="table table-striped w-100 dt-responsive nowrap" id="dataTable">
             <thead>
                 <tr>
-                    <th>No. </th>
-                    <th>ID Transaksi</th>
-                    <th>Tanggal</th>
-                    <!-- <th>Jenis</th> -->
-                    <th>Keterangan</th>
-                    <th>Aksi</th>
+                    <th>no</th>
+                    <th>id_barang</th>
+                    <th>nama barang</th>
+                    <th>jumlah</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
                 $no = 1;
-                if ($barangkeluar) :
-                    foreach ($barangkeluar as $bk) :
-                ?>
-                        <tr>
-                            <td><?= $no++; ?></td>
-                            <td><?= $bk['id_barang_keluar']; ?></td>
-                            <td><?= $bk['tanggal_keluar']; ?></td>
-                            <td><?= $bk['keterangan']; ?></td>
-                            <td>
-                                <a href="<?= base_url('barangkeluar/edit/') . $bk['id_barang_keluar'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
-                                <a onclick="confirmDelete('<?= base_url('barangkeluar/delete/') . $bk['id_barang_keluar'] ?>')" class="btn btn-danger btn-circle btn-sm">
-                                    <i class="fa fa-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else : ?>
+                foreach ($barangs as $row) : ?>
                     <tr>
-                        <td colspan="7" class="text-center">
-                            Data Kosong
-                        </td>
+                        <td><?= $no++; ?></td>
+                        <td><?php echo $row['id_barang']; ?></td>
+                        <td><?php echo $row['id_barang_keluar']; ?></td>
+                        <td><?php echo $row['jumlah']; ?></td>
                     </tr>
-                <?php endif; ?>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>
 </div>
-
-
-
+<!-- Pastikan Bootstrap dan jQuery sudah dimuat -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <!-- SweetAlert CSS dan JavaScript -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11">
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -72,7 +56,7 @@
     function confirmDelete(url) {
         Swal.fire({
             title: 'Konfirmasi Hapus',
-            text: "Apakah Anda yakin ingin menghapus barang Keluar ini?",
+            text: "Apakah Anda yakin ingin menghapus barang keluar ini?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
