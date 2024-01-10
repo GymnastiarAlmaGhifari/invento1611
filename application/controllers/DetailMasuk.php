@@ -88,7 +88,7 @@ class DetailMasuk extends CI_Controller
                 redirect('detailmasuk/index/' . $_POST["id_barang_masuk"]);
             } else {
                 set_pesan('Opps ada kesalahan!');
-                redirect('detailmasuk/add');
+                redirect('detailmasuk/edit/'.$id_detail_masuk.'/'.$id_masuk);
             }
         }
     }

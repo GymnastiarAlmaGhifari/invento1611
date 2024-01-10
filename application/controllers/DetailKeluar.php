@@ -77,16 +77,16 @@ class DetailKeluar extends CI_Controller
         } else {
             $input = $this->input->post(null, true);
             $this->db->trans_start();
-            $barang = $this->admin->getBarangById($input['id_barang'])[0];
+            $detail = $this->admin->getDetailKeluarById($id_detail_keluar)[0];
+            $barang = $this->admin->getBarangById($detail['id_barang'])[0];
             if ($barang['stok'] < $input['jumlah']) {
                 set_pesan('Stok barang kurang');
-                redirect('detailkeluar/add/'.$id_keluar);
+                redirect('detailkeluar/edit/'.$id_detail_keluar.'/' .$id_keluar);
             }
-            $detail = $this->admin->getDetailKeluarById($id_detail_keluar)[0];
             $barang = $this->admin->getBarangById($detail['id_barang'])[0];
             $stok = $barang['stok'] + $detail['jumlah'];
             $data = [
-                'jumlah'=>$barang['jumlah'],
+                'jumlah'=>$input['jumlah'],
             ];
             $insert = $this->admin->update('detail_keluar', 'id_detail_keluar', $id_detail_keluar, $data);
             $total = $stok - $input['jumlah'];
@@ -98,7 +98,7 @@ class DetailKeluar extends CI_Controller
                 redirect('detailkeluar/index/'.$_POST["id_barang_keluar"]);
             } else {
                 set_pesan('Opps ada kesalahan!');
-                redirect('detailkeluar/add');
+                redirect('detailkeluar/edit/'.$id_detail_keluar.'/'.$id_keluar);
             }
         }
     }
