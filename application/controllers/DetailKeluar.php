@@ -85,7 +85,10 @@ class DetailKeluar extends CI_Controller
             $detail = $this->admin->getDetailKeluarById($id_detail_keluar)[0];
             $barang = $this->admin->getBarangById($detail['id_barang'])[0];
             $stok = $barang['stok'] + $detail['jumlah'];
-            $insert = $this->admin->update('detail_keluar', 'id_detail_keluar', $id_detail_keluar, $_POST);
+            $data = [
+                'jumlah'=>$barang['jumlah'],
+            ];
+            $insert = $this->admin->update('detail_keluar', 'id_detail_keluar', $id_detail_keluar, $data);
             $total = $stok - $input['jumlah'];
             $this->admin->updateStok($input['id_barang'], $total);
             $this->db->trans_complete();

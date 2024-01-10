@@ -75,7 +75,10 @@ class DetailMasuk extends CI_Controller
             $detail = $this->admin->getDetailMasukById($id_detail_masuk)[0];
             $barang = $this->admin->getBarangById($detail['id_barang'])[0];
             $stok = $barang['stok'] - $detail['jumlah'];
-            $insert = $this->admin->update('detail_masuk', 'id_detail_masuk', $id_detail_masuk, $_POST);
+            $data = [
+                'jumlah'=>$input['jumlah'],
+            ];
+            $insert = $this->admin->update('detail_masuk', 'id_detail_masuk', $id_detail_masuk, $data);
             $total = $stok + $input['jumlah'];
             $this->admin->updateStok($input['id_barang'], $total);
             $this->db->trans_complete();
