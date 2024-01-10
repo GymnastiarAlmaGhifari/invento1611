@@ -63,7 +63,7 @@ class DetailMasuk extends CI_Controller
         if ($this->form_validation->run() == false) {
             $detail = $this->admin->getDetailMasukById($id_detail_masuk)[0];
             $barang = $this->admin->getBarangById($detail['id_barang'])[0];
-            
+
             $data['title'] = "Barang Masuk";
             $data['barang'] = $barang['nama_barang'];
             $data['stock'] = $barang['stok'] - $detail['jumlah'];
@@ -76,11 +76,11 @@ class DetailMasuk extends CI_Controller
             $barang = $this->admin->getBarangById($detail['id_barang'])[0];
             $stok = $barang['stok'] - $detail['jumlah'];
             $data = [
-                'jumlah'=>$input['jumlah'],
+                'jumlah' => $input['jumlah'],
             ];
             $insert = $this->admin->update('detail_masuk', 'id_detail_masuk', $id_detail_masuk, $data);
             $total = $stok + $input['jumlah'];
-            $this->admin->updateStok($input['id_barang'], $total);
+            $this->admin->updateStok($detail['id_barang'], $total);
             $this->db->trans_complete();
 
             if ($insert) {
@@ -88,7 +88,7 @@ class DetailMasuk extends CI_Controller
                 redirect('detailmasuk/index/' . $_POST["id_barang_masuk"]);
             } else {
                 set_pesan('Opps ada kesalahan!');
-                redirect('detailmasuk/edit/'.$id_detail_masuk.'/'.$id_masuk);
+                redirect('detailmasuk/edit/' . $id_detail_masuk . '/' . $id_masuk);
             }
         }
     }
