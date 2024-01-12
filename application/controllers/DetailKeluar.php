@@ -31,7 +31,8 @@ class DetailKeluar extends CI_Controller
         $this->template->load('templates/dashboard', 'detail_keluar/data', $data);
     }
 
-    public function add($id_keluar) {
+    public function add($id_keluar)
+    {
         $this->_validasi();
 
         if ($this->form_validation->run() == false) {
@@ -45,7 +46,7 @@ class DetailKeluar extends CI_Controller
             $barang = $this->admin->getBarangById($input['id_barang'])[0];
             if ($barang['stok'] < $input['jumlah']) {
                 set_pesan('Stok barang kurang');
-                redirect('detailkeluar/add/'.$id_keluar);
+                redirect('detailkeluar/add/' . $id_keluar);
             }
 
             $insert = $this->admin->insert('detail_keluar', $_POST);
@@ -54,24 +55,25 @@ class DetailKeluar extends CI_Controller
 
             if ($insert) {
                 set_pesan('data berhasil disimpan.');
-                redirect('detailkeluar/index/'.$_POST["id_barang_keluar"]);
+                redirect('detailkeluar/index/' . $_POST["id_barang_keluar"]);
             } else {
                 set_pesan('Opps ada kesalahan!');
-                redirect('detailkeluar/add/'.$id_keluar);
+                redirect('detailkeluar/add/' . $id_keluar);
             }
         }
     }
 
-    public function edit($id_detail_keluar,$id_keluar) {
+    public function edit($id_detail_keluar, $id_keluar)
+    {
         $this->_validasi();
 
         if ($this->form_validation->run() == false) {
             $detail = $this->admin->getDetailKeluarById($id_detail_keluar)[0];
             $barang = $this->admin->getBarangById($detail['id_barang'])[0];
-            
+
             $data['title'] = "Edit Barang Keluar";
             $data['barang'] = $barang['nama_barang'];
-            $data['stock'] = $barang['stok'] +$detail['jumlah'];
+            $data['stock'] = $barang['stok'] + $detail['jumlah'];
             $data['id_detail_keluar'] = $id_keluar;
             $this->template->load('templates/dashboard', 'detail_keluar/edit', $data);
         } else {
@@ -79,31 +81,31 @@ class DetailKeluar extends CI_Controller
             $this->db->trans_start();
             $detail = $this->admin->getDetailKeluarById($id_detail_keluar)[0];
             $barang = $this->admin->getBarangById($detail['id_barang'])[0];
-            if ($barang['stok'] < $input['jumlah']) {
+            if (($barang['stok'] + $detail["jumlah"]) < $input['jumlah']) {
                 set_pesan('Stok barang kurang');
-                redirect('detailkeluar/edit/'.$id_detail_keluar.'/' .$id_keluar);
+                redirect('detailkeluar/edit/' . $id_detail_keluar . '/' . $id_keluar);
             }
             $barang = $this->admin->getBarangById($detail['id_barang'])[0];
             $stok = $barang['stok'] + $detail['jumlah'];
             $data = [
-                'jumlah'=>$input['jumlah'],
+                'jumlah' => $input['jumlah'],
             ];
             $insert = $this->admin->update('detail_keluar', 'id_detail_keluar', $id_detail_keluar, $data);
             $total = $stok - $input['jumlah'];
-            $this->admin->updateStok($input['id_barang'], $total);
+            $this->admin->updateStok($detail['id_barang'], $total);
             $this->db->trans_complete();
 
             if ($insert) {
                 set_pesan('data berhasil disimpan.');
-                redirect('detailkeluar/index/'.$_POST["id_barang_keluar"]);
+                redirect('detailkeluar/index/' . $_POST["id_barang_keluar"]);
             } else {
                 set_pesan('Opps ada kesalahan!');
-                redirect('detailkeluar/edit/'.$id_detail_keluar.'/'.$id_keluar);
+                redirect('detailkeluar/edit/' . $id_detail_keluar . '/' . $id_keluar);
             }
         }
     }
 
-    public function delete($id_detail_keluar,$id_keluar)
+    public function delete($id_detail_keluar, $id_keluar)
     {
         $this->db->trans_start();
         $detail = $this->admin->getDetailKeluarById($id_detail_keluar)[0];
@@ -115,6 +117,6 @@ class DetailKeluar extends CI_Controller
         } else {
             set_pesan('data gagal dihapus.', false);
         }
-        redirect('/detailkeluar/index/'.$id_keluar);
+        redirect('/detailkeluar/index/' . $id_keluar);
     }
 }

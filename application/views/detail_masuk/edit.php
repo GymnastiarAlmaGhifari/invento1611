@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col">
                         <h4 class="h5 align-middle m-0 font-weight-bold text-primary">
-                            Form Input Barang Keluar
+                            Form Edit Detail Barang Masuk
                         </h4>
                     </div>
                     <div class="col-auto">
@@ -26,7 +26,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row form-group">
-                            <label class="col-md-4 text-md-right" for="id_barang">Barang</label>
+                            <label class="col-md-4 text-md-right" for="id_barang">Nama Barang</label>
                             <div class="col-md-5">
                                 <div class="input-group">
                                     <input readonly="readonly"  name="id_barang" id="id_barang" value="<?= $barang?>"class="form-control">
