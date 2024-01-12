@@ -28,6 +28,7 @@
                     <th>Tanggal</th>
                     <th>Detail Barang</th>
                     <th>Keterangan</th>
+                    <th>Berkas</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -45,6 +46,8 @@
                                 <a href="<?= base_url('detailkeluar/index/') . $bk['id_barang_keluar'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-boxes"></i></a>
                             </td>
                             <td><?= $bk['keterangan']; ?></td>
+                            <td><?= $bk['berkas']; ?></td>
+
                             <td>
                                 <a href="<?= base_url('barangkeluar/edit/') . $bk['id_barang_keluar'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
                                 <a onclick="confirmDelete('<?= base_url('barangkeluar/delete/') . $bk['id_barang_keluar'] ?>')" class="btn btn-danger btn-circle btn-sm">
