@@ -45,6 +45,13 @@
                     </div>
                 </div>
                 <div class="row form-group">
+                    <label class="col-md-4 text-md-right" for="berkas">Unggah Berkas (PDF/Gambar)</label>
+                    <div class="col-md-5">
+                        <input type="file" name="berkas" accept=".pdf, .jpg, .jpeg, .png">
+                        <?= form_error('berkas', '<small class="text-danger">', '</small>'); ?>
+                    </div>
+                </div>
+                <div class="row form-group">
                     <div class="col offset-md-4">
                         <button type="submit" class="btn btn-primary">Simpan</button>
                         <button type="reset" class="btn btn-secondary">Reset</button>

@@ -1,11 +1,11 @@
-<h2>id transaksi : <?= $id_masuk ?></h2>
+<h2>Id Transaksi : <?= $id_masuk ?></h2>
 <?= $this->session->flashdata('pesan'); ?>
 <div class="card shadow-sm border-bottom-primary">
     <div class="card-header bg-white py-3">
         <div class="row">
             <div class="col">
                 <h4 class="h5 align-middle m-0 font-weight-bold text-primary">
-                    List Barang
+                    List Detail Barang Masuk
                 </h4>
             </div>
             <div class="col-auto">
@@ -73,7 +73,7 @@
     function confirmDelete(url) {
         Swal.fire({
             title: 'Konfirmasi Hapus',
-            text: "Apakah Anda yakin ingin menghapus barang masuk ini?",
+            text: "Apakah Anda yakin ingin menghapus Detail barang masuk ini?",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
