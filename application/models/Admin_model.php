@@ -102,6 +102,30 @@ class Admin_model extends CI_Model
         return $this->db->get('barang_keluar bk')->result_array();
     }
 
+    // fungsi yang mengambil dari database menggunakan parameter id barang keluar mengambil semua yang berlasi dengan barang dan detail keluar
+    public function getBarangKeluarById($id_barang_keluar)
+    {
+        $this->db->select('*');
+        $this->db->from('barang_keluar');
+        $this->db->join('detail_keluar', 'barang_keluar.id_barang_keluar = detail_keluar.id_barang_keluar');
+        $this->db->join('barang', 'detail_keluar.id_barang = barang.id_barang');
+        $this->db->where('barang_keluar.id_barang_keluar', $id_barang_keluar);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
+    // fungsi yang mengambil dari database menggunakan parameter id barang keluar mengambil semua yang berlasi dengan barang dan detail keluar
+    public function getBarangMasukById($id_barang_masuk)
+    {
+        $this->db->select('*');
+        $this->db->from('barang_masuk');
+        $this->db->join('detail_masuk', 'barang_masuk.id_barang_masuk = detail_masuk.id_barang_masuk');
+        $this->db->join('barang', 'detail_masuk.id_barang = barang.id_barang');
+        $this->db->where('barang_masuk.id_barang_masuk', $id_barang_masuk);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
     public function getDetailKeluar($id_barang_keluar)
     {
         $this->db->select('*');
@@ -111,6 +135,8 @@ class Admin_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();
     }
+
+
 
     public function getMax($table, $field, $kode = null)
     {
@@ -173,38 +199,56 @@ class Admin_model extends CI_Model
         return $query->result();
     }
 
-    public function updateStok($id_barang, $jumlah) {
+    public function updateStok($id_barang, $jumlah)
+    {
         $this->db->set('stok', $jumlah);
         $this->db->where('id_barang', $id_barang);
         $this->db->update('barang');
-    }    
+    }
 
-    public function getDetailMasukById($id_detail_masuk) {
+    public function getDetailMasukById($id_detail_masuk)
+    {
         $this->db->where('id_detail_masuk', $id_detail_masuk);
         $query = $this->db->get('detail_masuk');
         return $query->result_array();
     }
-    public function getDetailKeluarById($id_detail_keluar) {
+    public function getDetailKeluarById($id_detail_keluar)
+    {
         $this->db->where('id_detail_keluar', $id_detail_keluar);
         $query = $this->db->get('detail_keluar');
         return $query->result_array();
     }
 
-    public function getBarangById($id_barang) {
+    public function getBarangById($id_barang)
+    {
         $this->db->where('id_barang', $id_barang);
         $query = $this->db->get('barang');
         return $query->result_array();
     }
 
-    public function tambahStok($id_barang, $jumlah) {
-        $this->db->set('stok', 'stok + '.$jumlah, FALSE);
+    public function tambahStok($id_barang, $jumlah)
+    {
+        $this->db->set('stok', 'stok + ' . $jumlah, FALSE);
         $this->db->where('id_barang', $id_barang);
         $this->db->update('barang');
     }
-    
-    public function kurangiStok($id_barang, $jumlah) {
-        $this->db->set('stok', 'stok - '.$jumlah, FALSE);
+
+    public function kurangiStok($id_barang, $jumlah)
+    {
+        $this->db->set('stok', 'stok - ' . $jumlah, FALSE);
         $this->db->where('id_barang', $id_barang);
         $this->db->update('barang');
+    }
+    public function formatTanggalIndonesia($tanggal)
+    {
+        $bulan = [
+            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+        ];
+
+        $timestamp = strtotime($tanggal);
+        $formattedDate = date('d', $timestamp) . ' ' . $bulan[date('n', $timestamp) - 1] . ' ' . date('Y', $timestamp);
+
+        return $formattedDate;
     }
 }

@@ -49,6 +49,7 @@
                             <td><?= $bk['berkas']; ?></td>
 
                             <td>
+                                <a href="<?= base_url('cetak/pdf_keluar/') . $bk['id_barang_keluar'] ?>" class="btn btn-light btn-circle btn-sm"><i class="fas fa-print"></i></a>
                                 <a href="<?= base_url('barangkeluar/edit/') . $bk['id_barang_keluar'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
                                 <a onclick="confirmDelete('<?= base_url('barangkeluar/delete/') . $bk['id_barang_keluar'] ?>')" class="btn btn-danger btn-circle btn-sm">
                                     <i class="fa fa-trash"></i>
