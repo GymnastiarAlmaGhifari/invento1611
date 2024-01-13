@@ -109,6 +109,8 @@ class Admin_model extends CI_Model
         $this->db->from('barang_keluar');
         $this->db->join('detail_keluar', 'barang_keluar.id_barang_keluar = detail_keluar.id_barang_keluar');
         $this->db->join('barang', 'detail_keluar.id_barang = barang.id_barang');
+        $this->db->join('satuan', 'barang.satuan_id = satuan.id_satuan');
+        $this->db->join('jenis', 'barang.jenis_id = jenis.id_jenis');
         $this->db->where('barang_keluar.id_barang_keluar', $id_barang_keluar);
         $query = $this->db->get();
         return $query->result_array();
@@ -121,6 +123,8 @@ class Admin_model extends CI_Model
         $this->db->from('barang_masuk');
         $this->db->join('detail_masuk', 'barang_masuk.id_barang_masuk = detail_masuk.id_barang_masuk');
         $this->db->join('barang', 'detail_masuk.id_barang = barang.id_barang');
+        $this->db->join('satuan', 'barang.satuan_id = satuan.id_satuan');
+        $this->db->join('jenis', 'barang.jenis_id = jenis.id_jenis');
         $this->db->where('barang_masuk.id_barang_masuk', $id_barang_masuk);
         $query = $this->db->get();
         return $query->result_array();

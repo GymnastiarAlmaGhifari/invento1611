@@ -37,23 +37,28 @@ class Cetak extends CI_Controller
             $pdf->Cell(0, 10, 'Laporan Barang Keluar', 0, 1, 'C');  // Centered text with line
             $pdf->Ln(10);
 
+            // user yang mengeluarkan dari session yang login
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(0, 10, 'Dikeluarkan oleh ' . userdata('username'), 0, 1, 'L');
+            $pdf->Ln(2);
+
             // saling bersebalahan
             $pdf->SetFont('Arial', '', 12);
             // disebelah kanan
             // disebelah kiri
-            $pdf->Cell(43, 10, 'Kode Barang Keluar :', 0, 0, 'L');
-            $pdf->Cell(60, 10, $data[0]['id_barang_keluar'], 0, 0, 'L');
+            $pdf->Cell(43, 5, 'Kode Barang Keluar :', 0, 0, 'L');
+            $pdf->Cell(60, 5, $data[0]['id_barang_keluar'], 0, 0, 'L');
 
             // disebelah kanan
             $pdf->Cell(35);  // Adding a blank cell for spacing
-            $pdf->Cell(20, 10, 'Tanggal Keluar :', 0, 0, 'R');
-            $pdf->Cell(32, 10, $this->admin->formatTanggalIndonesia($data[0]['tanggal_keluar']), 0, 1, 'R');
+            $pdf->Cell(20, 5, 'Tanggal Keluar :', 0, 0, 'R');
+            $pdf->Cell(32, 5, $this->admin->formatTanggalIndonesia($data[0]['tanggal_keluar']), 0, 1, 'R');
 
 
             $pdf->Ln(10);
             $pdf->Cell(0, 1, '', 'T', 2, 'C', 1);  // Draw a thicker line under the text
             // keluarkan semua barang yang keluar dari nama barang, jumlah keluar, dan satuan dengan bentuk table
-            $pdf->Ln(10);
+            $pdf->Ln(5);
 
 
             // Table header
@@ -66,24 +71,35 @@ class Cetak extends CI_Controller
             // Set X coordinate to center the table
             $pdf->SetX($xCoordinate);
 
+            // nomor urut
+            $pdf->Cell(20, 10, 'No', 1, 0, 'C');
             $pdf->Cell(60, 10, 'Nama Barang', 1, 0, 'C');
             $pdf->Cell(60, 10, 'Supplier', 1, 0, 'C');
-            $pdf->Cell(60, 10, 'Jumlah Keluar', 1, 1, 'C');
+            $pdf->Cell(20, 10, 'Jumlah', 1, 1, 'C');
+            // $pdf->Cell(20, 10, 'Harga', 1, 1, 'C');
+
+            // harga
 
             // Table rows
             $pdf->SetFont('Arial', '', 12);
+            $counter = 1; // Initialize the counter
+
             foreach ($data as $row) {
                 // Set X coordinate to center the table
                 $pdf->SetX($xCoordinate);
 
+
+                // nomer auto increment
+                $pdf->Cell(20, 10, $counter++, 1, 0, 'C'); // Increment and display counter
                 $pdf->Cell(60, 10, $row['nama_barang'], 1, 0, 'C');
                 $pdf->Cell(60, 10, $row['supp_id'], 1, 0, 'C');
-                $pdf->Cell(60, 10, $row['jumlah'], 1, 1, 'C');
+                $pdf->Cell(20, 10, $row['jumlah'], 1, 1, 'C');
+                // $pdf->Cell(20, 10, $row['jumlah'], 1, 1, 'C');
             }
 
 
             // keluarkan keterangan
-            $pdf->Cell(185, 20, 'Keterangan Transaksi :  ' . $data[0]['keterangan'], 0, 0, 'R');
+            // $pdf->Cell(185, 20, 'Keterangan Transaksi :  ' . $data[0]['keterangan'], 0, 0, 'R');
             $pdf->Ln(30);
 
             // saling bersebalahan
@@ -131,6 +147,11 @@ class Cetak extends CI_Controller
             $pdf->SetFont('Arial', 'B', 20);
             $pdf->Cell(0, 10, 'Laporan Barang Masuk', 0, 1, 'C');  // Centered text with line
             $pdf->Ln(10);
+
+            $pdf->SetFont('Arial', '', 12);
+            $pdf->Cell(0, 10, 'Dimasukkan oleh: ' . userdata('username'), 0, 1, 'L');
+            $pdf->Ln(5);
+
 
             // saling bersebalahan
             $pdf->SetFont('Arial', '', 12);

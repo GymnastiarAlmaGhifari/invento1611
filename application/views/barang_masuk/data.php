@@ -49,7 +49,7 @@
                             <td><?= $bm['berkas']; ?></td>
 
                             <td>
-                                <a href="<?= base_url('cetak/pdf_masuk/') . $bm['id_barang_masuk'] ?>" class="btn btn-light btn-circle btn-sm"><i class="fas fa-print"></i></a>
+                                <a target="_blank" href="<?= base_url('cetak/pdf_masuk/') . $bm['id_barang_masuk'] ?>" class="btn btn-light btn-circle btn-sm"><i class="fas fa-print"></i></a>
 
                                 <a href="<?= base_url('barangmasuk/edit/') . $bm['id_barang_masuk'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
                                 <a onclick="confirmDelete('<?= base_url('barangmasuk/delete/') . $bm['id_barang_masuk'] ?>')" class="btn btn-danger btn-circle btn-sm">
