@@ -28,6 +28,11 @@ class Laporan extends CI_Controller
             $mulai = date('Y-m-d', strtotime($pecah[0]));
             $akhir = date('Y-m-d', strtotime(end($pecah)));
 
+            if (strtotime($akhir) < strtotime($mulai)) {
+                set_pesan('tanggal akhir harus setalah tanggal mulai');
+                redirect('laporan');
+            }
+
             $query = '';
             if ($table == 'barang_masuk') {
                 $query = $this->admin->getBarangMasuk(null, null, ['mulai' => $mulai, 'akhir' => $akhir]);
@@ -58,40 +63,61 @@ class Laporan extends CI_Controller
             $pdf->Cell(10, 7, 'No.', 1, 0, 'C');
             $pdf->Cell(25, 7, 'Tgl Masuk', 1, 0, 'C');
             $pdf->Cell(35, 7, 'ID Transaksi', 1, 0, 'C');
-            $pdf->Cell(55, 7, 'Nama Barang', 1, 0, 'C');
-            $pdf->Cell(40, 7, 'Supplier', 1, 0, 'C');
-            $pdf->Cell(30, 7, 'Jumlah Masuk', 1, 0, 'C');
+            $pdf->Cell(60, 7, 'Supplier', 1, 0, 'C');
+            $pdf->Cell(50, 7, 'Nama Barang', 1, 0, 'C');
             $pdf->Ln();
 
             $no = 1;
             foreach ($data as $d) {
+                $barangs = $this->admin->getBarangMasukData($d['id_barang_masuk']);
+                
+                $namaBarangLines = count($barangs);
+                $namaBarangHeight = 7 * $namaBarangLines;
+                $remainingHeight = max($namaBarangHeight, 7);
+                $namaBarangs = "";
+                foreach ($barangs as $key => $value) {
+                    $namaBarangs .= $value->nama_barang .' '. $value->jumlah.' '.$value->nama_satuan;
+                    if ($key-1 != $namaBarangLines) {
+                        $namaBarangs .= "\n";
+                    }
+                }
+                
+
                 $pdf->SetFont('Arial', '', 10);
-                $pdf->Cell(10, 7, $no++ . '.', 1, 0, 'C');
-                $pdf->Cell(25, 7, $d['tanggal_masuk'], 1, 0, 'C');
-                $pdf->Cell(35, 7, $d['id_barang_masuk'], 1, 0, 'C');
-                $pdf->Cell(55, 7, $d['nama_barang'], 1, 0, 'L');
-                $pdf->Cell(40, 7, $d['nama_supplier'], 1, 0, 'L');
-                $pdf->Cell(30, 7, $d['jumlah_masuk'] . ' ' . $d['nama_satuan'], 1, 0, 'C');
-                $pdf->Ln();
-            } else :
+                $pdf->Cell(10, $remainingHeight, $no++ . '.', 1, 0, 'C');
+                $pdf->Cell(25, $remainingHeight, $d['tanggal_masuk'], 1, 0, 'C');
+                $pdf->Cell(35, $remainingHeight, $d['id_barang_masuk'], 1, 0, 'C');
+                $pdf->Cell(60, $remainingHeight, $d['nama_supplier'], 1, 0, 'L');
+                $pdf->MultiCell(50, 7, $namaBarangs, 1, 'L');
+            }
+        else :
             $pdf->Cell(10, 7, 'No.', 1, 0, 'C');
             $pdf->Cell(25, 7, 'Tgl Keluar', 1, 0, 'C');
             $pdf->Cell(35, 7, 'ID Transaksi', 1, 0, 'C');
-            $pdf->Cell(70, 7, 'Nama Barang', 1, 0, 'C');
-            $pdf->Cell(20, 7, 'Jumlah', 1, 0, 'C');
-            $pdf->Cell(38, 7, 'Keterangan', 1, 0, 'C');
+            $pdf->Cell(70, 7, 'Keterangan', 1, 0, 'C');
+            $pdf->Cell(50, 7, 'Nama Barang', 1, 0, 'C');
             $pdf->Ln();
 
             $no = 1;
             foreach ($data as $d) {
+                $barangs = $this->admin->getBarangKeluarData($d['id_barang_keluar']);
+                $namaBarangLines = count($barangs);
+                $namaBarangHeight = 7 * $namaBarangLines;
+                $remainingHeight = max($namaBarangHeight, 7);
+                $namaBarangs = "";
+                foreach ($barangs as $key => $value) {
+                    $namaBarangs .= $value->nama_barang .' '. $value->jumlah.' '.$value->nama_satuan;
+                    if ($key-1 != $namaBarangLines) {
+                        $namaBarangs .= "\n";
+                    }
+                }
+
                 $pdf->SetFont('Arial', '', 10);
-                $pdf->Cell(10, 7, $no++ . '.', 1, 0, 'C');
-                $pdf->Cell(25, 7, $d['tanggal_keluar'], 1, 0, 'C');
-                $pdf->Cell(35, 7, $d['id_barang_keluar'], 1, 0, 'C');
-                $pdf->Cell(70, 7, $d['nama_barang'], 1, 0, 'L');
-                $pdf->Cell(20, 7, $d['jumlah_keluar'] . ' ' . $d['nama_satuan'], 1, 0, 'C');
-                $pdf->Cell(38, 7, $d['keterangan'], 1, 0, 'L');
-                $pdf->Ln();
+                $pdf->Cell(10, $remainingHeight, $no++ . '.', 1, 0, 'C');
+                $pdf->Cell(25, $remainingHeight, $d['tanggal_keluar'], 1, 0, 'C');
+                $pdf->Cell(35, $remainingHeight, $d['id_barang_keluar'], 1, 0, 'C');
+                $pdf->Cell(70, $remainingHeight, $d['keterangan'], 1, 0, 'L');
+                $pdf->MultiCell(50, 7, $namaBarangs, 1, 'L');
             }
         endif;
 
