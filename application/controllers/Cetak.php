@@ -34,7 +34,7 @@ class Cetak extends CI_Controller
 
             // header
             $pdf->SetFont('Arial', 'B', 20);
-            $pdf->Cell(0, 10, 'Laporan Barang Keluar', 0, 1, 'C');  // Centered text with line
+            $pdf->Cell(0, 10, 'Surat Barang Keluar', 0, 1, 'C');  // Centered text with line
             $pdf->Ln(10);
 
             // user yang mengeluarkan dari session yang login
@@ -66,7 +66,7 @@ class Cetak extends CI_Controller
 
             // Calculate the X coordinate to center the table
             $tableWidth = 180; // Sum of the cell widths
-            $xCoordinate = ($pdf->GetPageWidth() - $tableWidth) / 2;
+            $xCoordinate = ($pdf->GetPageWidth() - $tableWidth) / 1.4;
 
             // Set X coordinate to center the table
             $pdf->SetX($xCoordinate);
@@ -145,7 +145,7 @@ class Cetak extends CI_Controller
 
             // header
             $pdf->SetFont('Arial', 'B', 20);
-            $pdf->Cell(0, 10, 'Laporan Barang Masuk', 0, 1, 'C');  // Centered text with line
+            $pdf->Cell(0, 10, 'Surat Barang Masuk', 0, 1, 'C');  // Centered text with line
             $pdf->Ln(10);
 
             $pdf->SetFont('Arial', '', 12);
