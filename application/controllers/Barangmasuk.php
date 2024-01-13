@@ -29,7 +29,6 @@ class Barangmasuk extends CI_Controller
     public function add()
     {
         $this->_validasi();
-        var_dump($this->form_validation->run());
         if ($this->form_validation->run() == false) {
             $data['title'] = "Barang Masuk";
             $data['supplier'] = $this->admin->get('supplier');
@@ -41,7 +40,7 @@ class Barangmasuk extends CI_Controller
             $kode_terakhir = $this->admin->getMax('barang_masuk', 'id_barang_masuk', $kode);
             if ($kode_terakhir) {
                 $kode_tambah = substr($kode_terakhir, -5, 5);
-            }else {
+            } else {
                 $kode_tambah = 0;
             }
             $kode_tambah++;
@@ -51,7 +50,7 @@ class Barangmasuk extends CI_Controller
             $this->template->load('templates/dashboard', 'barang_masuk/add', $data);
         } else {
             $input = $this->input->post(null, true);
-            if($_FILES['berkas']['name'] != ""){
+            if ($_FILES['berkas']['name'] != "") {
                 $input['berkas'] = $this->upload_berkas('berkas')['file_name'];
             }
             var_dump($_POST);
@@ -63,7 +62,7 @@ class Barangmasuk extends CI_Controller
 
             if ($insert) {
                 set_pesan('data berhasil disimpan.');
-                redirect('detailmasuk/index/'.$_POST["id_barang_masuk"]);
+                redirect('detailmasuk/index/' . $_POST["id_barang_masuk"]);
             } else {
                 set_pesan('Opps ada kesalahan!');
                 redirect('barangmasuk/add');
@@ -81,11 +80,11 @@ class Barangmasuk extends CI_Controller
             $data['barangmasuk'] = $this->admin->get('barang_masuk', ['id_barang_masuk' => $id]);
             $data['supplier'] = $this->admin->get('supplier');
             $this->template->load('templates/dashboard', 'barang_masuk/edit', $data);
-       } else {
+        } else {
 
             $input = $this->input->post(null, true);
 
-            if($_FILES['berkas']['name'] != ""){
+            if ($_FILES['berkas']['name'] != "") {
                 $input['berkas'] = $this->upload_berkas('berkas')['file_name'];
             }
             $update = $this->admin->update('barang_masuk', 'id_barang_masuk', $id, $input);
@@ -111,14 +110,15 @@ class Barangmasuk extends CI_Controller
         redirect('barangmasuk');
     }
 
-    private function upload_berkas($filename){
+    private function upload_berkas($filename)
+    {
         $config['upload_path']          = './berkas/';
         $config['allowed_types']        = 'gif|jpg|png|pdf';
         $config['max_size']             = 4000;
         $config['max_width']            = 10000;
         $config['max_height']           = 10000;
         $this->load->library('upload', $config);
-        
+
 
         if (!$this->upload->do_upload($filename)) {
             $error = array('error' => $this->upload->display_errors());
@@ -129,5 +129,3 @@ class Barangmasuk extends CI_Controller
         return $this->upload->data();
     }
 }
-
-
