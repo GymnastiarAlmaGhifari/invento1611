@@ -28,7 +28,7 @@
                     <th>Tgl Masuk</th>
                     <th>Supplier</th>
                     <th>Detail Barang</th>
-					<th>Berkas</th>
+                    <th>Berkas</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
@@ -37,21 +37,24 @@
                 $no = 1;
                 if ($barangmasuk) :
                     foreach ($barangmasuk as $bm) :
-                        ?>
+                ?>
                         <tr>
                             <td><?= $no++; ?></td>
                             <td><?= $bm['id_barang_masuk']; ?></td>
                             <td><?= $bm['tanggal_masuk']; ?></td>
                             <td><?= $bm['nama_supplier']; ?></td>
                             <td>
-                            <a href="<?= base_url('detailmasuk/index/') . $bm['id_barang_masuk'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-boxes"></i></a></td>
-							<td><?= $bm['berkas']; ?></td>
+                                <a href="<?= base_url('detailmasuk/index/') . $bm['id_barang_masuk'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fas fa-boxes"></i></a>
+                            </td>
+                            <td><?= $bm['berkas']; ?></td>
 
                             <td>
-                            <a href="<?= base_url('barangmasuk/edit/') . $bm['id_barang_masuk'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
-							<a onclick="confirmDelete('<?= base_url('barangmasuk/delete/') . $bm['id_barang_masuk'] ?>')" class="btn btn-danger btn-circle btn-sm">
-<i class="fa fa-trash"></i>
-</a>
+                                <a target="_blank" href="<?= base_url('cetak/pdf_masuk/') . $bm['id_barang_masuk'] ?>" class="btn btn-light btn-circle btn-sm"><i class="fas fa-print"></i></a>
+
+                                <a href="<?= base_url('barangmasuk/edit/') . $bm['id_barang_masuk'] ?>" class="btn btn-warning btn-circle btn-sm"><i class="fa fa-edit"></i></a>
+                                <a onclick="confirmDelete('<?= base_url('barangmasuk/delete/') . $bm['id_barang_masuk'] ?>')" class="btn btn-danger btn-circle btn-sm">
+                                    <i class="fa fa-trash"></i>
+                                </a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
