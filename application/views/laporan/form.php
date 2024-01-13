@@ -13,11 +13,11 @@
                     <label class="col-md-3 text-md-right" for="transaksi">Laporan Transaksi</label>
                     <div class="col-md-9">
                         <div class="custom-control custom-radio">
-                            <input value="barang_masuk" type="radio" id="barang_masuk" name="transaksi" class="custom-control-input">
+                            <input value="barang_masuk" type="radio" id="barang_masuk" require name="transaksi" class="custom-control-input">
                             <label class="custom-control-label" for="barang_masuk">Barang Masuk</label>
                         </div>
                         <div class="custom-control custom-radio">
-                            <input value="barang_keluar" type="radio" id="barang_keluar" name="transaksi" class="custom-control-input">
+                            <input value="barang_keluar" type="radio" id="barang_keluar" require name="transaksi" class="custom-control-input">
                             <label class="custom-control-label" for="barang_keluar">Barang Keluar</label>
                         </div>
                         <?= form_error('transaksi', '<span class="text-danger small">', '</span>'); ?>

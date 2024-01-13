@@ -255,4 +255,28 @@ class Admin_model extends CI_Model
 
         return $formattedDate;
     }
+
+    function getBarangMasukData($id_barang_masuk)
+    {
+        $CI = &get_instance();
+        $CI->db->select('detail_masuk.jumlah, barang.nama_barang, satuan.nama_satuan');
+        $CI->db->from('detail_masuk');
+        $CI->db->join('barang', 'barang.id_barang = detail_masuk.id_barang');
+        $CI->db->join('satuan', 'satuan.id_satuan = barang.satuan_id');
+        $CI->db->where('detail_masuk.id_barang_masuk', $id_barang_masuk);
+        $query = $CI->db->get();
+        return $query->result();
+    }
+
+    function getBarangKeluarData($id_barang_keluar) {
+        $CI =& get_instance();
+        $CI->db->select('detail_keluar.jumlah, barang.nama_barang, satuan.nama_satuan');
+        $CI->db->from('detail_keluar');
+        $CI->db->join('barang', 'barang.id_barang = detail_keluar.id_barang');
+        $CI->db->join('satuan', 'satuan.id_satuan = barang.satuan_id');
+        $CI->db->where('detail_keluar.id_barang_keluar', $id_barang_keluar);
+        $query = $CI->db->get();
+        return $query->result();
+    }
+    
 }
