@@ -30,9 +30,13 @@ class Profile extends CI_Controller
         $db = $this->admin->get('user', ['id_user' => $this->input->post('id_user', true)]);
         $username = $this->input->post('username', true);
         $email = $this->input->post('email', true);
+        $uniq_username = '';
+        $uniq_email = '';
 
-        $uniq_username = $db['username'] == $username ? '' : '|is_unique[user.username]';
-        $uniq_email = $db['email'] == $email ? '' : '|is_unique[user.email]';
+        if ($username || $email) {
+            $uniq_username = $db['username'] == $username ? '' : '|is_unique[user.username]';
+            $uniq_email = $db['email'] == $email ? '' : '|is_unique[user.email]';
+        }
 
         $this->form_validation->set_rules('username', 'Username', 'required|trim|alpha_numeric' . $uniq_username);
         $this->form_validation->set_rules('email', 'Email', 'required|trim|valid_email' . $uniq_email);
@@ -49,13 +53,13 @@ class Profile extends CI_Controller
             $this->template->load('templates/dashboard', 'profile/setting', $data);
         } else {
             $input = $this->input->post(null, true);
-                $insert = $this->admin->update('user', 'id_user', $input['id_user'], $input);
-                if ($insert) {
-                    set_pesan('perubahan berhasil disimpan.');
-                } else {
-                    set_pesan('perubahan tidak disimpan.');
-                }
-                redirect('profile/setting');
+            $insert = $this->admin->update('user', 'id_user', $input['id_user'], $input);
+            if ($insert) {
+                set_pesan('perubahan berhasil disimpan.');
+            } else {
+                set_pesan('perubahan tidak disimpan.');
+            }
+            redirect('profile/setting');
         }
     }
 
