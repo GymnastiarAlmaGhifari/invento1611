@@ -1053,11 +1053,16 @@ class CI_Form_validation {
 	 * @return	bool
 	 */
 	public function required($str)
-	{
-		return is_array($str)
-			? (empty($str) === FALSE)
-			: (trim($str) !== '');
-	}
+{
+    if ($str === null) {
+        return false; // Or handle the null case as needed
+    }
+
+    return is_array($str)
+        ? (empty($str) === false)
+        : (trim($str) !== '');
+}
+
 
 	// --------------------------------------------------------------------
 
